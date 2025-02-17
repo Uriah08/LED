@@ -7,7 +7,7 @@ import { Route, Routes } from 'react-router-dom'
 function App() {
 
   return (
-    <main>
+    <main className='bg-[#CBCBCB]'>
       <Routes>
         <Route path="/auth/login" element={<Login />}/>
         <Route path="/" element={<Main />}/>

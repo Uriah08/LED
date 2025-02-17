@@ -3,7 +3,7 @@ import Sidebar from "./containers/Sidebar"
 
 const Main = () => {
   return (
-    <div className="w-full flex h-screen bg-[#CBCBCB]">
+    <div className="w-full flex h-full bg-[#CBCBCB]">
         <Sidebar/>
         <MainContent/>
     </div>

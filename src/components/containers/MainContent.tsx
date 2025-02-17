@@ -17,7 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../ui/popover"
-import Graph from "./Graph"
+// import Graph from "./Graph"
 
 import { useHideSidebar } from "../store/useHideSideBar"
 
@@ -123,7 +123,7 @@ const MainContent = () => {
 
             </div>
 
-            <Graph/>
+            {/* <Graph/> */}
         </div>
     </div>
   )
