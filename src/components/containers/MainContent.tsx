@@ -17,7 +17,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../ui/popover"
-// import Graph from "./Graph"
+import { Graph } from "./Graph"
 
 import { useHideSidebar } from "../store/useHideSideBar"
 
@@ -26,20 +26,31 @@ const MainContent = () => {
     const { isHidden, toggleSidebar } = useHideSidebar();
 
     const [sensor, setSensor] = React.useState("전체");
-    const [averageTime, setAverageTime] = React.useState("1분 평균값");
-    const [toDate, setToDate] = React.useState<Date | undefined>(new Date())
-    const [fromDate, setFromDate] = React.useState<Date | undefined>(new Date())
+    const [averageTime, setAverageTime] = React.useState("90d");
+    const [toDate, setToDate] = React.useState<Date>()
+    const [fromDate, setFromDate] = React.useState<Date>()
+
+    const formattedToDate = toDate ? new Date(new Date(toDate).setDate(toDate.getDate() + 1)).toISOString().split('T')[0] : undefined;
+    const formattedFromDate = fromDate ? new Date(new Date(fromDate).setDate(fromDate.getDate() + 1)).toISOString().split('T')[0] : undefined;
+
+    console.log(
+        "sensor: ", sensor,
+        " averageTime: ", averageTime,
+        " fromDate: ", fromDate,
+        " toDate: ", toDate
+    );
+    
 
   return (
     <div className={`relative h-full w-full bg-[#CBCBCB] pt-[60px] ${isHidden ? '' : 'xl:ml-[300px]'}`}>
-        <div className="fixed w-full h-[60px] bg-[#797979] top-0 z-10 flex items-center pl-5">
+        <div className="fixed w-full h-[60px] bg-[#797979] top-0 z-10 flex items-center pl-3 md:pl-5">
             {isHidden ? (
-                <Menu onClick={toggleSidebar} className={`text-white cursor-pointer ${isHidden ? 'ml-5' : 'ml-[300px] xl:ml-0'}`} size={30}/>
+                <Menu onClick={toggleSidebar} className={`text-white cursor-pointer ${isHidden ? 'md:ml-5' : 'ml-[300px] xl:ml-0'}`} size={30}/>
             ) : (
-                <ArrowLeft onClick={toggleSidebar} className={`text-white cursor-pointer ${isHidden ? 'ml-5' : ' ml-[300px] xl:ml-0'}`} size={30}/>
+                <ArrowLeft onClick={toggleSidebar} className={`text-white cursor-pointer ${isHidden ? 'md:ml-5' : ' ml-[300px] xl:ml-0'}`} size={30}/>
             )}
         </div>
-        <div className="w-full h-full flex flex-col p-10 gap-5">
+        <div className="w-full h-full flex flex-col p-3 md:p-10 gap-5">
             <div className="flex gap-5 flex-wrap">
                 
                 <Select value={sensor} onValueChange={setSensor}>
@@ -61,10 +72,10 @@ const MainContent = () => {
                     <SelectValue placeholder="1분 평균값" />
                 </SelectTrigger>
                 <SelectContent className="rounded-none">
-                    <SelectItem value="1분 평균값">1분 평균값</SelectItem>
-                    <SelectItem value="5분 평균값">5분 평균값</SelectItem>
-                    <SelectItem value="30분 평균값">30분 평균값</SelectItem>
-                    <SelectItem value="1시간 평균값">1시간 평균값</SelectItem>
+                    <SelectItem value="2d">1분 평균값</SelectItem>
+                    <SelectItem value="7d">5분 평균값</SelectItem>
+                    <SelectItem value="30d">30분 평균값</SelectItem>
+                    <SelectItem value="90d">1시간 평균값</SelectItem>
                 </SelectContent>
                 </Select>
 
@@ -123,7 +134,7 @@ const MainContent = () => {
 
             </div>
 
-            {/* <Graph/> */}
+            <Graph sensor={sensor} Atime={averageTime} toDate={formattedToDate ? new Date(formattedToDate) : undefined} fromDate={formattedFromDate ? new Date(formattedFromDate) : undefined} />
         </div>
     </div>
   )
