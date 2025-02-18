@@ -26,20 +26,12 @@ const MainContent = () => {
     const { isHidden, toggleSidebar } = useHideSidebar();
 
     const [sensor, setSensor] = React.useState("전체");
-    const [averageTime, setAverageTime] = React.useState("90d");
+    const [averageTime, setAverageTime] = React.useState<string>();
     const [toDate, setToDate] = React.useState<Date>()
     const [fromDate, setFromDate] = React.useState<Date>()
 
     const formattedToDate = toDate ? new Date(new Date(toDate).setDate(toDate.getDate() + 1)).toISOString().split('T')[0] : undefined;
-    const formattedFromDate = fromDate ? new Date(new Date(fromDate).setDate(fromDate.getDate() + 1)).toISOString().split('T')[0] : undefined;
-
-    console.log(
-        "sensor: ", sensor,
-        " averageTime: ", averageTime,
-        " fromDate: ", fromDate,
-        " toDate: ", toDate
-    );
-    
+    const formattedFromDate = fromDate ? new Date(new Date(fromDate).setDate(fromDate.getDate() + 2)).toISOString().split('T')[0] : undefined;
 
   return (
     <div className={`relative h-full w-full bg-[#CBCBCB] pt-[60px] ${isHidden ? '' : 'xl:ml-[300px]'}`}>
@@ -69,13 +61,13 @@ const MainContent = () => {
 
                 <Select value={averageTime} onValueChange={setAverageTime}>
                 <SelectTrigger className="w-full bg-white rounded-none min-w-[200px] flex-1">
-                    <SelectValue placeholder="1분 평균값" />
+                    <SelectValue placeholder="평균 시간 선택" />
                 </SelectTrigger>
                 <SelectContent className="rounded-none">
-                    <SelectItem value="2d">1분 평균값</SelectItem>
-                    <SelectItem value="7d">5분 평균값</SelectItem>
-                    <SelectItem value="30d">30분 평균값</SelectItem>
-                    <SelectItem value="90d">1시간 평균값</SelectItem>
+                    <SelectItem value="1m">1분 평균값</SelectItem>
+                    <SelectItem value="5m">5분 평균값</SelectItem>
+                    <SelectItem value="30m">30분 평균값</SelectItem>
+                    <SelectItem value="1h">1시간 평균값</SelectItem>
                 </SelectContent>
                 </Select>
 
